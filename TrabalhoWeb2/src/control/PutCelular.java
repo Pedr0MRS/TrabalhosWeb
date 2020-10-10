@@ -5,6 +5,8 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
+import model.Celular;
+
 
 /**
  * <p>Classe Java de putCelular complex type.
@@ -16,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="arg0" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="arg0" type="{http://control/}celular" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -31,17 +33,17 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class PutCelular {
 
-    protected String arg0;
+    protected Celular arg0;
 
     /**
      * Obtém o valor da propriedade arg0.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Celular }
      *     
      */
-    public String getArg0() {
+    public Celular getArg0() {
         return arg0;
     }
 
@@ -50,10 +52,10 @@ public class PutCelular {
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Celular }
      *     
      */
-    public void setArg0(String value) {
+    public void setArg0(Celular value) {
         this.arg0 = value;
     }
 

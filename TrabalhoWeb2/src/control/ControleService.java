@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.2
  * 
  */
-@WebServiceClient(name = "ControleService", targetNamespace = "http://control/", wsdlLocation = "http://localhost:1515/ws/celular?wsdl")
+@WebServiceClient(name = "ControleService", targetNamespace = "http://control/", wsdlLocation = "http://localhost:2484/ws/celular?wsdl")
 public class ControleService
     extends Service
 {
@@ -30,7 +30,7 @@ public class ControleService
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("http://localhost:1515/ws/celular?wsdl");
+            url = new URL("http://localhost:2484/ws/celular?wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }
@@ -65,11 +65,11 @@ public class ControleService
     /**
      * 
      * @return
-     *     returns ControleInterface
+     *     returns InterfaceControle
      */
     @WebEndpoint(name = "ControlePort")
-    public ControleInterface getControlePort() {
-        return super.getPort(new QName("http://control/", "ControlePort"), ControleInterface.class);
+    public InterfaceControle getControlePort() {
+        return super.getPort(new QName("http://control/", "ControlePort"), InterfaceControle.class);
     }
 
     /**
@@ -77,11 +77,11 @@ public class ControleService
      * @param features
      *     A list of {@link javax.xml.ws.WebServiceFeature} to configure on the proxy.  Supported features not in the <code>features</code> parameter will have their default values.
      * @return
-     *     returns ControleInterface
+     *     returns InterfaceControle
      */
     @WebEndpoint(name = "ControlePort")
-    public ControleInterface getControlePort(WebServiceFeature... features) {
-        return super.getPort(new QName("http://control/", "ControlePort"), ControleInterface.class, features);
+    public InterfaceControle getControlePort(WebServiceFeature... features) {
+        return super.getPort(new QName("http://control/", "ControlePort"), InterfaceControle.class, features);
     }
 
     private static URL __getWsdlLocation() {

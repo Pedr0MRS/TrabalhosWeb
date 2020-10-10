@@ -6,6 +6,9 @@ import javax.xml.bind.annotation.XmlElementDecl;
 import javax.xml.bind.annotation.XmlRegistry;
 import javax.xml.namespace.QName;
 
+import model.Capinha;
+import model.Celular;
+
 
 /**
  * This object contains factory methods for each 
@@ -210,6 +213,22 @@ public class ObjectFactory {
      */
     public PostCapinha createPostCapinha() {
         return new PostCapinha();
+    }
+
+    /**
+     * Create an instance of {@link Celular }
+     * 
+     */
+    public Celular createCelular() {
+        return new Celular();
+    }
+
+    /**
+     * Create an instance of {@link Capinha }
+     * 
+     */
+    public Capinha createCapinha() {
+        return new Capinha();
     }
 
     /**

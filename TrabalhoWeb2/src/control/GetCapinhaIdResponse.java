@@ -6,6 +6,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+import model.Capinha;
+
 
 /**
  * <p>Classe Java de getCapinhaIdResponse complex type.
@@ -17,7 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="return" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="return" type="{http://control/}capinha" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -33,17 +35,17 @@ import javax.xml.bind.annotation.XmlType;
 public class GetCapinhaIdResponse {
 
     @XmlElement(name = "return")
-    protected String _return;
+    protected Capinha _return;
 
     /**
      * Obtém o valor da propriedade return.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Capinha }
      *     
      */
-    public String getReturn() {
+    public Capinha getReturn() {
         return _return;
     }
 
@@ -52,10 +54,10 @@ public class GetCapinhaIdResponse {
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Capinha }
      *     
      */
-    public void setReturn(String value) {
+    public void setReturn(Capinha value) {
         this._return = value;
     }
 
