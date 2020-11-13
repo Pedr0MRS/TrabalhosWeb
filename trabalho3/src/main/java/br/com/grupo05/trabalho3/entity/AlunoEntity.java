@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -17,7 +18,8 @@ import javax.persistence.Table;
 public class AlunoEntity {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
+	@SequenceGenerator(name="aluno_id_seq")
 	@Column(name="id")
 	private Long id;
 	
@@ -36,6 +38,10 @@ public class AlunoEntity {
 			   inverseJoinColumns = {@JoinColumn(name = "disciplina_id")})
 	private List<DisciplinaEntity> disciplinas = new ArrayList<>();
 
+	public AlunoEntity() {
+		
+	}
+	
 	public AlunoEntity(Long id, String nome, String matricula, String curso) {
 		super();
 		this.id = id;
