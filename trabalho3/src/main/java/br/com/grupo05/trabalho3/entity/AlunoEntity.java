@@ -89,4 +89,15 @@ public class AlunoEntity {
 	public void setDisciplinas(List<DisciplinaEntity> disciplinas) {
 		this.disciplinas = disciplinas;
 	}
+	
+	public void adicionarDisciplina(DisciplinaEntity disciplina) {
+		disciplinas.add(disciplina);
+		disciplina.getAlunos().add(this);
+	}
+	
+	public void removerDisciplina(DisciplinaEntity disciplina) {
+		disciplinas.remove(disciplina);
+		disciplina.getAlunos().remove(this);
+	}
+	
 }

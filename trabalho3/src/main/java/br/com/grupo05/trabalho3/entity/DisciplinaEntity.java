@@ -17,21 +17,25 @@ public class DisciplinaEntity {
 
 	@Id
 	@GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
-	@SequenceGenerator(name="disciplina_id_seq")
-	@Column(name="id", nullable = false)
+	@SequenceGenerator(name = "disciplina_id_seq")
+	@Column(name = "id", nullable = false)
 	private Long id;
-	
-	@Column(name="nome", nullable = false)
+
+	@Column(name = "nome", nullable = false)
 	private String nome;
-	
-	@Column(name="orientador", nullable = false)
+
+	@Column(name = "orientador", nullable = false)
 	private String orientador;
-	
-	@Column(name="creditos", nullable = false)
+
+	@Column(name = "creditos", nullable = false)
 	private int creditos;
-	
+
 	@ManyToMany(mappedBy = "disciplinas")
 	private List<AlunoEntity> alunos = new ArrayList<>();
+
+	public DisciplinaEntity() {
+
+	}
 
 	public DisciplinaEntity(Long id, String nome, String orientador, int creditos) {
 		super();
@@ -80,5 +84,5 @@ public class DisciplinaEntity {
 	public void setAlunos(List<AlunoEntity> alunos) {
 		this.alunos = alunos;
 	}
-	
+
 }

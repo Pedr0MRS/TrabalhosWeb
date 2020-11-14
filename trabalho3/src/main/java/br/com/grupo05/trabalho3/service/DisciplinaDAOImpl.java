@@ -1,6 +1,7 @@
 package br.com.grupo05.trabalho3.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,10 @@ public class DisciplinaDAOImpl implements CrudDAO<DisciplinaEntity> {
 
 	@Override
 	public DisciplinaEntity buscar(Long id) {
+		Optional<DisciplinaEntity> disciplina = repository.findById(id);
+		if (disciplina.isPresent()) {
+			return disciplina.get();
+		}
 		return null;
 	}
 
