@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +27,7 @@ public class AlunoController {
 	private AlunoDAOImpl alunoDAO;
 
 	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE })
+	@PreAuthorize("hasRole('ADMIN')")
 	public void adicionarAluno(@RequestBody AlunoEntity aluno) {
 		alunoDAO.adicionar(aluno);
 	}
@@ -39,7 +42,8 @@ public class AlunoController {
 		alunoDAO.remover(id);
 	}
 
-	@PostMapping(value = "/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE })
+	@PutMapping(value = "/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE })
+	@PreAuthorize("hasRole('ADMIN')")
 	public void atualizarAluno(@PathVariable("id") Long id, @RequestBody AlunoEntity aluno) {
 		aluno.setId(id);
 		alunoDAO.atualizar(aluno);
@@ -61,12 +65,12 @@ public class AlunoController {
 	}
 
 	@GetMapping(value = "/nome/{nomeAluno}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<AlunoEntity> buscarAlunoPorNome(@PathVariable("nomeAluno") String nome) {
-		return new ResponseEntity<AlunoEntity>(alunoDAO.buscarAlunoPorNome(nome), HttpStatus.OK);
+	public ResponseEntity<List<AlunoEntity>> buscarAlunosPorNome(@PathVariable("nomeAluno") String nome) {
+		return new ResponseEntity<List<AlunoEntity>>(alunoDAO.buscarAlunosPorNome(nome), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/curso/{cursoAluno}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public ResponseEntity<AlunoEntity> buscarAlunoPorCurso(@PathVariable("cursoAluno") String curso) {
-		return new ResponseEntity<AlunoEntity>(alunoDAO.buscarAlunoPorCurso(curso), HttpStatus.OK);
+	public ResponseEntity<List<AlunoEntity>> buscarAlunosPorCurso(@PathVariable("cursoAluno") String curso) {
+		return new ResponseEntity<List<AlunoEntity>>(alunoDAO.buscarAlunosPorCurso(curso), HttpStatus.OK);
 	}
 }

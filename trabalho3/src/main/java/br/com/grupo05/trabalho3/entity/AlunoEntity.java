@@ -3,8 +3,10 @@ package br.com.grupo05.trabalho3.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -13,8 +15,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+
 @Entity
 @Table(name = "aluno")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class AlunoEntity {
 
 	@Id
@@ -32,7 +39,7 @@ public class AlunoEntity {
 	@Column(name="curso", nullable = false)
 	private String curso;
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.DETACH, fetch = FetchType.LAZY)
 	@JoinTable(name = "aluno_disciplina",
 	           joinColumns = { @JoinColumn(name = "aluno_id")},
 			   inverseJoinColumns = {@JoinColumn(name = "disciplina_id")})

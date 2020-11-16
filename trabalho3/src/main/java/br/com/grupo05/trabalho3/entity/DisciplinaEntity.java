@@ -5,14 +5,19 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "disciplina")
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class DisciplinaEntity {
 
 	@Id
@@ -30,7 +35,7 @@ public class DisciplinaEntity {
 	@Column(name = "creditos", nullable = false)
 	private int creditos;
 
-	@ManyToMany(mappedBy = "disciplinas")
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "disciplinas")
 	private List<AlunoEntity> alunos = new ArrayList<>();
 
 	public DisciplinaEntity() {

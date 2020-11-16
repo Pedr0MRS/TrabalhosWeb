@@ -1,19 +1,18 @@
 package br.com.grupo05.trabalho3.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 
 import br.com.grupo05.trabalho3.dao.CrudDAO;
 import br.com.grupo05.trabalho3.entity.AlunoEntity;
 import br.com.grupo05.trabalho3.entity.DisciplinaEntity;
+import br.com.grupo05.trabalho3.error.BadRequestException;
+import br.com.grupo05.trabalho3.error.ResourceNotFoundException;
 import br.com.grupo05.trabalho3.repository.AlunoRepository;
 
 @Service
-@Configurable
 public class AlunoDAOImpl implements CrudDAO<AlunoEntity> {
 
 	@Autowired
@@ -24,25 +23,25 @@ public class AlunoDAOImpl implements CrudDAO<AlunoEntity> {
 
 	@Override
 	public void adicionar(AlunoEntity entidade) {
+		validaCamposAluno(entidade);
 		repository.save(entidade);
 	}
 
 	@Override
 	public AlunoEntity buscar(Long id) {
-		Optional<AlunoEntity> aluno = repository.findById(id);
-		if (aluno.isPresent()) {
-			return aluno.get();
-		}
-		return null;
+		return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Não foi encontrado aluno com id=" + id));
 	}
 
 	@Override
 	public void remover(Long id) {
+		buscar(id);
 		repository.deleteById(id);
 	}
 
 	@Override
 	public void atualizar(AlunoEntity entidade) {
+		buscar(entidade.getId());
+		validaCamposAluno(entidade);
 		repository.save(entidade);
 	}
 
@@ -65,12 +64,49 @@ public class AlunoDAOImpl implements CrudDAO<AlunoEntity> {
 		atualizar(aluno);
 	}
 	
-	public AlunoEntity buscarAlunoPorNome(String nome) {
-		return repository.findByNome(nome);
+	public List<AlunoEntity> buscarAlunosPorNome(String nome) {
+		return repository.findByNomeContaining(nome);
 	}
 	
-	public AlunoEntity buscarAlunoPorCurso(String curso) {
-		return repository.findByCurso(curso);
+	public List<AlunoEntity> buscarAlunosPorCurso(String curso) {
+		return repository.findByCursoContaining(curso);
 	}
-
+	
+	private void validaCamposAluno(AlunoEntity aluno) {
+		if (aluno.getNome() == null || aluno.getNome().isEmpty()) {
+			throw new BadRequestException("É necessário preencher campo nome");
+		}
+		if (aluno.getCurso() == null || aluno.getCurso().isEmpty() ) {
+			throw new BadRequestException("É necessário preencher campo curso");
+		}
+		if (aluno.getMatricula() == null || aluno.getMatricula().isEmpty() ) {
+			throw new BadRequestException("É necessário preencher campo matrícula");
+		}
+		if (aluno.getNome().length() > 100) {
+			throw new BadRequestException("O número máximo de caracteres do campo nome é (100)");
+		}
+		if (aluno.getMatricula().length() > 30) {
+			throw new BadRequestException("O número máximo de caracteres do campo matrícula é (30)");
+		}
+		if (aluno.getCurso().length() > 50) {
+			throw new BadRequestException("O número máximo de caracteres do campo curso é (50)");
+		}
+		if (!soTemNumeros(aluno.getMatricula())) {
+			throw new BadRequestException("Só pode conter números no campo matrícula");
+		}
+		AlunoEntity alunoByMatricula = repository.findByMatricula(aluno.getMatricula());
+		if (alunoByMatricula != null && alunoByMatricula.getId() != aluno.getId()) {
+			throw new BadRequestException("Já existe aluno com essa matrícula");
+		}
+	}
+	
+	
+	public boolean soTemNumeros(String texto) { 
+		for (int i = 0; i < texto.length(); i++) { 
+			if (!Character.isDigit(texto.charAt(i))) { 
+				return false; 
+			} 
+		} 
+		return true; 
+	}
 }
