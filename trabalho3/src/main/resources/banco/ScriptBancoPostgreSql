@@ -1,0 +1,65 @@
+CREATE SEQUENCE aluno_id_seq;
+
+CREATE TABLE aluno (
+id INTEGER NOT NULL DEFAULT nextval('aluno_id_seq'),
+nome VARCHAR(100),
+matricula VARCHAR(30),
+curso VARCHAR(50)
+);
+
+ALTER SEQUENCE aluno_id_seq OWNED BY aluno.id;
+
+CREATE SEQUENCE disciplina_id_seq;
+
+CREATE TABLE disciplina(
+id INTEGER NOT NULL DEFAULT nextval('disciplina_id_seq'),
+nome VARCHAR(50),
+orientador VARCHAR(100),
+creditos INTEGER
+);
+
+ALTER SEQUENCE disciplina_id_seq OWNED BY disciplina.id;
+
+CREATE TABLE aluno_disciplina(
+aluno_id INTEGER,
+disciplina_id INTEGER
+);
+
+CREATE SEQUENCE usuario_id_seq;
+
+CREATE TABLE usuario(
+id INTEGER NOT NULL DEFAULT nextval('usuario_id_seq'),
+usuario VARCHAR(50),
+senha VARCHAR(50),
+nome VARCHAR(50),
+admin boolean
+);
+
+ALTER SEQUENCE usuario_id_seq OWNED BY aluno.id;
+
+ALTER TABLE usuario
+ADD CONSTRAINT usuario_id_pk
+   PRIMARY KEY (id);
+
+ALTER TABLE aluno
+ADD CONSTRAINT aluno_id_pk
+   PRIMARY KEY (id);
+   
+ALTER TABLE disciplina
+ADD CONSTRAINT disciplina_id_pk
+   PRIMARY KEY (id);
+   
+ALTER TABLE aluno_disciplina
+ADD CONSTRAINT aluno_disci_id_aluno_id_disciplina_pk
+  PRIMARY KEY (aluno_id, disciplina_id);
+  
+ALTER TABLE aluno_disciplina
+ADD CONSTRAINT aluno_disci_id_aluno_fk
+    FOREIGN KEY (aluno_id) REFERENCES aluno(id);
+	
+ALTER TABLE aluno_disciplina
+ADD CONSTRAINT aluno_disci_id_disciplina_fk
+    FOREIGN KEY (disciplina_id) REFERENCES disciplina(id);
+
+-- A senha é admin    
+INSERT INTO usuario (usuario, senha, nome, admin) VALUES('admin', '$2a$10$X/bq3458J4tgQa551n.pP.dhLaWIlHA9bl894H7peUPgr6dvERDT2', 'ADMIN', true);
